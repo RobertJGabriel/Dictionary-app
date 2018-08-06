@@ -1,0 +1,12 @@
+{
+  "name": "dictionary",
+  "private": true,
+  "version": "0.0.0",
+  "dependencies": {
+    "Font-Awesome": "https://github.com/FortAwesome/Font-Awesome.git#^5.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}

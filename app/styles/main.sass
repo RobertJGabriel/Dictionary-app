@@ -1,0 +1,183 @@
+$font-stack:    Arial, "Helvetica Neue", Helvetica, sans-serif
+$background-color: #f6f9fc
+$black: #525f7f
+$grey: #666666
+$link-color: #6772e5
+$link-color-hover: #32325d
+
+#app_extension, #app_extension_form, #app_extension *, #app_extension_form *
+  font-family: $font-stack
+  textension-align: left
+  white-space: none
+  word-spacing: none
+  letter-spacing: none
+  line-height: 1.2em
+  background-color: $background-color
+  color: $black
+  margin: 0
+  padding: 0
+  border: 0
+  outline: none
+  position: relative
+  display: block
+  overflow: show
+  float: none
+  clear: none
+  opacity: 1
+  visibility: visible
+  list-style: none
+
+#app_extension
+  opacity: 1
+  position: absolute
+  z-index: 65000
+  img
+    height: auto
+    width: auto
+
+  margin: 0px
+  font-size: 14px
+  padding: 40px 40px 40px 120px
+  background-color: $background-color
+  border-radius: 4px
+  -webkit-box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07)
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07)
+  -webkit-transition-property: color, background-color, -webkit-box-shadow, -webkit-transform
+  transition-property: color, background-color, -webkit-box-shadow, -webkit-transform
+  transition-property: color, background-color, box-shadow, transform
+  transition-property: color, background-color, box-shadow, transform, -webkit-box-shadow, -webkit-transform
+  -webkit-transition-duration: .15s
+  transition-duration: .15s
+  -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0px 0px 18px
+  padding: 30px
+  overflow: auto
+
+  span, img, a, em, strong
+    display: inline-table
+
+  span, div
+    margin: 0px
+    padding: 0px
+
+  a
+    color: $link-color
+    &:hover
+      color: $link-color-hover
+
+  ol, ul
+    display: list
+    margin-top: 1em
+    margin-bottom: 1em
+
+  ol
+    li
+      list-style-type: circle
+
+  li
+    display: list-item
+    margin-top: 0.2em
+
+  ul, ol
+    margin-top: 1em
+    padding-left: 2.5em
+
+  ul ul, ol ul, ul ol, ol ol
+    margin-top: 1em
+    padding-left: 1.5em
+
+
+  strong
+    font-weight: bold
+
+  em
+    font-style: italic
+
+  p
+    margin-left: 10px
+    margin-top: 10px
+
+
+#app_extension_form
+  background: $background-color
+  padding: 10px
+  font-family: $font-stack
+  font-size: 14px
+  opacity: 0
+  -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0px 0px 18px
+
+#app_extension_shader
+  opacity: 0
+  -webkit-transition: opacity 0.35s linear
+
+#app_extension_content
+  overflow-x: hidden
+  overflow-y: scroll
+  height: inherit
+  width: auto
+  padding-right: 10px
+  
+
+#app_extension_spacer
+  height: 20px
+
+#app_extension
+
+  .app_extension_title
+    font-weight: bold
+    font-size: 125%
+    textension-decoration: none
+    color: $black
+
+  .app_extension_phonetic
+    margin-left: 1em
+    white-space: nowrap
+
+  .app_extension_audio
+    margin-left: 1em
+    img
+      margin-right: 1.0em
+      margin-left: 1.0em
+
+  .app_extension_speaker
+    vertical-align: bottom
+    cursor: pointer
+    &:hover
+      opacity: 0.7
+
+  .app_extension_subtitle
+    font-weight: bold
+    padding-top: 10px
+
+  .app_extension_separator
+    margin: 20px auto 10px auto
+    height: 0px
+    width: 100%
+    border: none
+    border-top: 1px solid #AAA
+    opacity: 0.75
+
+
+#app_extension
+
+  .app_extension_parent
+    display: table
+    padding-top: 3em
+    width: 100%
+  .app_extension_child
+    display: table-cell
+    text-align: center
+    vertical-align: middle
+  .app_extension_pos
+    color: $grey
+    font-size: 0.85em
+    white-space: nowrap
+    display: inline-block
+    textension-transform: lowercase
+
+  .alternate_source
+    textension-decoration: none
+    color:  $link-color
+
+    &:hover
+      textension-decoration: underline
+      color: $link-color-hover

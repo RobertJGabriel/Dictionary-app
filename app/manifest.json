@@ -1,0 +1,34 @@
+{
+  "name": "__MSG_appName__",
+  "version": "0.2.3",
+  "manifest_version": 2,
+  "description": "__MSG_appDescription__",
+  "icons": {
+    "16": "images/icons/icon.png",
+    "128": "images/icons/icon.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "scripts/chromereload.js",
+      "scripts/background.js"
+    ]
+  },
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "css": ["styles/main.css"],
+    "js": ["scripts/content.js"],
+    "run_at": "document_end",
+    "all_frames": true
+  }],
+  "permissions": [
+    "tabs",
+    "http://dictionary-lookup.org/",
+    "http://en.wikipedia.org/"
+  ],
+  "web_accessible_resources": [
+    "images/app/external.png",
+    "images/app/icon.png",
+    "images/app/speaker.png"
+  ]
+}
