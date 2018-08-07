@@ -1,27 +1,20 @@
 /*jslint node: true */
 /*jshint undef:false */
-/*global localStorage: false, const: false, Storage: false,navigator: false, XMLHttpRequest: false, chrome: false, console: false, $: false */
 const ROOT_ID = 'app_extension';
 const FORM_ID = `${ROOT_ID}_form`;
 
 // URL var ants.
 const EXTERN_LINK_TEMPLATE = 'http://en.wikipedia.org/wiki/%query%';
-const AUDIO_LINK_TEMPLATE = 'http://en.wikipedia.org/wiki/File:%file%';
 const GOOGLE_LINK_TEMPLATE = 'http://www.google.com/search?q=%query%&tbs=dfn:1';
 const SPEAKER_ICON_URL = chrome.runtime.getURL('images/app/speaker.png');
 const EXTERNAL_ICON_URL = chrome.runtime.getURL('images/app/external.png');
 
 // Internal global vars.
 const body = document.getElementsByTagName('body')[0];
-// Extension options with defaults.
-const options = {
-  clickModifier: 'Alt',
-  shortcutModifier: 'Alt',
-  frameWidth: 550,
-  frameHeight: 'auto',
-  queryFormWidth: 250,
-  queryFormHeight: 50, // This one is an approximation for centering.
-};
+
+// Iframe width settings
+const frameWidth = 600;
+const frameHeight = 'auto';
 
 
 /**
@@ -94,11 +87,8 @@ function createPopup(query, x, y, windowX, windowY) {
       arg: query
     },
     response => {
-
       if (response !== null || response !== '') {
-
         const WRAPPER = document.createElement('div');
-
         WRAPPER.innerHTML = createHtmlFromLookup(query, response);
         for (let i = 0; i < WRAPPER.childNodes.length; i++) {
           FRAME.appendChild(WRAPPER.childNodes[i]);
@@ -111,8 +101,8 @@ function createPopup(query, x, y, windowX, windowY) {
   // Calculate frame position.
   const window_width = window.innerWidth;
   const window_height = window.innerHeight;
-  const full_frame_width = options.frameWidth;
-  const full_frame_height = options.frameHeight;
+  const full_frame_width = frameWidth;
+  const full_frame_height = frameHeight;
   let top = 0;
   let left = 0;
   const zoomRatio = getZoomRatio();
@@ -138,44 +128,10 @@ function createPopup(query, x, y, windowX, windowY) {
   // Set frame style.
   FRAME.style.left = `${left}px`;
   FRAME.style.top = `${top}px`;
-  FRAME.style.width = `${options.frameWidth}px`;
-  FRAME.style.height = `${options.frameHeight}px`;
+  FRAME.style.width = `${frameWidth}px`;
+  FRAME.style.height = `${frameHeight}px`;
 
 }
-
-
-/**
- * Get the audio button
- * @param  {} url
- * @param  {} src_element
- */
-function playAudio(url, src_element) {
-  new Audio(url).addEventListener('canplaythrough', function () {
-    this.play();
-  });
-}
-
-
-/**
- * registerAudioIcon
- * @param  {} icon
- * @param  {} filename
- */
-function registerAudioIcon(icon, filename) {
-
-  icon.addEventListener('click', function (e) {
-    const src_element = this;
-    chrome.runtime.sendMessage({
-        method: 'audio',
-        arg: filename
-      },
-      url => {
-        playAudio(url, src_element);
-      }
-    );
-  });
-}
-
 
 /**
  *  Fade out then destroy the frame and/or form.
@@ -211,8 +167,6 @@ function stripLinks(text) {
   return text.replace(/<a[^>]*>([^<>]*)<\/a>/g, '$1');
 }
 
-
-
 /**
  * @param  {} query
  * @param  {} dict_entry
@@ -221,19 +175,15 @@ function createHtmlFromLookup(query, dict_entry) {
 
   const BUFFER = [];
 
-
   BUFFER.push(`<div id="${ROOT_ID}_content">`);
 
   if (!dict_entry.meanings || dict_entry.meanings.length === 0) {
-
-
     BUFFER.push(
       `
       <div class='app_extension_parent'>
         <div class='app_extension_child'>
       `
     );
-
     BUFFER.push(`No definitions for <strong>${query}</strong>.`);
     if (dict_entry.suggestions) {
       // Offer suggestions.
@@ -287,18 +237,6 @@ function createHtmlFromLookup(query, dict_entry) {
       }
     }
 
-    if (dict_entry.audio && dict_entry.audio.length) {
-      for (var i in dict_entry.audio) {
-        const audio = dict_entry.audio[i];
-        BUFFER.push(`
-        <span class="${ROOT_ID}_audio" data-src="${audio.file}">
-          <img class="${ROOT_ID}_speaker" src=${SPEAKER_ICON_URL} title=" Listen"/>
-          (${audio.type})
-        </span>
-        `);
-
-      }
-    }
 
     BUFFER.push('</div>');
 
@@ -379,7 +317,6 @@ function getTrimmedSelection() {
  */
 function getZoomRatio() {
   return document.documentElement.clientWidth / window.innerWidth;
-  ratio = document.width / window.innerWidth;
 }
 
 

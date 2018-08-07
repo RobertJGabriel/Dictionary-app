@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "0.2.3",
+  "version": "0.5.0",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -28,7 +28,6 @@
   ],
   "web_accessible_resources": [
     "images/app/external.png",
-    "images/app/icon.png",
-    "images/app/speaker.png"
+    "images/app/icon.png"
   ]
 }

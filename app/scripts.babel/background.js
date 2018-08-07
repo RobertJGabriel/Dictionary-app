@@ -1,20 +1,34 @@
 const DICT_API_URL = 'http://dictionary-lookup.org/%query%';
-const AUDIO_API_URL = 'https://en.wikipedia.org/wiki/File:%file%';
+
+
 
 /**
- * Helper to send an AJAX request.
+ * Helper to send api requests
  * @param  {} url
- * @param  {} callback
+ * @param  {} sendResponse
  */
-function sendAjaxRequest(url, callback) {
-  const xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      callback(xhr.responseText);
+function sendRequest(url, sendResponse) {
+  const promiseObj = new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.send();
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          const resp = xhr.responseText;
+          const respJson = JSON.parse(resp);
+          resolve(respJson);
+        } else {
+          reject(xhr.status);
+          console.log('xhr failed');
+        }
+      } else {
+        console.log('xhr processing going on');
+      }
     }
-  };
-  xhr.open('GET', url, true);
-  xhr.send();
+    console.log('request sent succesfully');
+  });
+  return promiseObj;
 }
 
 
@@ -23,41 +37,25 @@ function sendAjaxRequest(url, callback) {
  * Receives a request containing two parameters:
  * method:
  *    'lookup' for a Dictionary lookup.
- *    'audio' to look up the URL of a given Wikimedia audio file.
  * @param  {} request
  * @param  {} sender
- * @param  {} callback
+ * @param  {} sendResponse
  */
-chrome.extension.onMessage.addListener((request, sender, callback) => {
-
+chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
   const method = request.method;
-
   if (method === 'lookup') {
     // Look up a term from the dictionary using the Ajax API.
     const lookupURL = DICT_API_URL.replace('%query%', request.arg);
-    sendAjaxRequest(lookupURL, resp => {
-      callback(JSON.parse(resp || '{}'));
-    });
-    return true; // Inform Chrome that we will make a delayed callback
+    sendRequest(lookupURL)
+      .then(resp => {
+        sendResponse(resp || '{}');
+      })
+      .catch(error => {
+        sendResponse('{}');
+      });
+    return true; // Inform Chrome that we will make a delayed sendResponse
   }
-
-  if (method === 'audio') {
-    // Look up the URL of a given wikipedia audio file.
-    const audioURL = AUDIO_API_URL.replace('%file%', request.arg);
-    sendAjaxRequest(audioURL, resp => {
-      const url_match = resp.match(/<source src='([^']+)' type='audio/);
-      if (url_match && url_match.length == 2) {
-        callback(url_match[1]);
-      } else {
-        callback('');
-      }
-    });
-
-    return true; // Inform Chrome that we will make a delayed callback
-  }
-
-  // Invalid request method. Ignore it.
-  if(method !== 'audio' && method !== 'lookup'){
-    callback('');
+  if ( method !== 'lookup') {
+    sendResponse('');
   }
 });
