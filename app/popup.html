@@ -11,7 +11,7 @@
   <!-- endbuild -->
 
   <!-- build:css styles/main.css -->
-  <link href="styles/main.css" rel="stylesheet">
+  <link href="styles/popup.css" rel="stylesheet">
   <!-- endbuild -->
 </head>
 
@@ -28,26 +28,7 @@
     </div>
 
 
-    <!-- Handler-->
-    <div class="row padding-top">
-      <div class="col-sm-12" v-if="currentTab == 'favorites'">
 
-
-
-        <!-- Loading of catogories -->
-        <ul v-cloak v-if="loading == false " class="categories">
-          <li v-for="( item, index) in filteredFavorites">
-            <template>
-              <i class="fas fa-star fav" v-on:click="updateFavorites(item, index,false)" v-if="item.favorite == true && paid"></i>
-              <a class="ellipsis" v-bind:href="item.url" target="_blank" v-html="item.value"> </a>
-            </template>
-          </li>
-        </ul>
-      </div>
-
-
-
-    </div>
   </div>
 
 

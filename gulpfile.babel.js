@@ -119,7 +119,7 @@ gulp.task('size', () => {
 
 
 gulp.task('css', function () {
-  return gulp.src('./app/styles/main.sass')
+  return gulp.src('./app/styles/*.sass')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./app/styles/'));
 });

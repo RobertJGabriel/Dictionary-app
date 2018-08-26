@@ -4,7 +4,6 @@ var vm = new Vue({
   el: '#app',
   data: {
     categories: [],
-    favorites: [],
     errorMessage: '',
     search: '',
     loading: true,

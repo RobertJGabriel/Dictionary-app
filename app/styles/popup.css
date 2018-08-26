@@ -1,199 +1,75 @@
 #app {
-  height: 600px;
-  max-width: 360px;
-  min-width: 360px;
+  height: 450px;
+  max-width: 560px;
+  min-width: 560px;
   overflow: auto;
-  width: 360px;
-  background-color: #EEEEEE !important;
-}
-
-::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #818181 !important;
-  /* Firefox */
-}
+  width: 560px;
+  background-color: #EEEEEE !important; }
 
 .errorMessage {
   background-color: #fff !important;
   height: 50px;
-  padding: 0px !important;
-}
-
-.errorMessage>p {
-  font-size: 12px;
-  line-height: 50px;
-  color: #000;
-}
+  padding: 0px !important; }
+  .errorMessage > p {
+    font-size: 12px;
+    line-height: 50px;
+    color: #000; }
 
 .padding-top {
-  padding-top: 20px;
-}
+  padding-top: 20px; }
 
-.categories>li>i {
+.categories > li > i {
   background-position: center;
-  background-repeat: no-repeat;
-}
+  background-repeat: no-repeat; }
 
 .row {
   margin: 0 !important;
-  margin-top: 50px;
-}
+  margin-top: 50px; }
 
 ul {
-  list-style: none;
-}
+  list-style: none; }
 
 .label {
   padding: 5px;
-  display: grid;
-}
+  display: grid; }
 
 .list {
   margin-top: 20px;
-  margin-bottom: 20px;
-}
+  margin-bottom: 20px; }
 
 .ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 275px;
-}
-
-.ellipsis:hover {
-  overflow: visible;
-}
+  max-width: 275px; }
+  .ellipsis:hover {
+    overflow: visible; }
 
 .click {
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .search {
-  background: #FFFFFF;
-  box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+  background: #00C853;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
   padding: 10px;
   margin-bottom: 0;
   color: #fff;
   padding: 9px 12px;
-  margin-bottom: 0px;
-}
-
-.search>input {
-  padding: 10px;
-  margin-bottom: 0;
-  background: #ebebeb;
-  color: #818181;
-  padding: 6px 12px;
-  margin-bottom: 0px;
-}
+  margin-bottom: 0px; }
+  .search > input {
+    padding: 10px;
+    margin-bottom: 0;
+    background: #B9F6CA;
+    color: #818181;
+    padding: 6px 12px;
+    margin-bottom: 0px; }
 
 .message {
   padding: 20px;
   background-color: black !important;
-  margin-bottom: 0;
-}
+  margin-bottom: 0; }
 
 .search-bottom {
   padding: 0px 10px;
   margin: 0px;
-  -webkit-transition: height 2s;
-  /* Safari */
-  transition: height 2s;
-}
-
-.search-bottom-open {
-  height: 93px !important;
-  display: block;
-}
-
-.bold-color {
-  color: #818181;
-}
-
-h5 {
-  font-weight: 600;
-}
-
-.footer-nav {
-  height: 60px;
-  text-align: center;
-  line-height: 60px;
-  font-size: 18px;
-  position: relative;
-  font-weight: bold;
-  align-items: center;
-  color: #818181 !important;
-  justify-content: center;
-  background-color: #f6f6f6 !important;
-  box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
-}
-
-.noWhite-smaller {
-  height: 33px;
-}
-
-.previewer {
-  overflow: scroll;
-}
-
-.container {
-  padding-right: 0;
-  padding-left: 0;
-}
-
-.navbar {
-  margin-bottom: 0;
-  text-align: center;
-  line-height: 60px;
-  font-size: 18px;
-  position: relative;
-  font-weight: bold;
-  align-items: center;
-  color: #818181 !important;
-  justify-content: center;
-  background-color: #4285f4 !important;
-  box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
-}
-
-.col-sm-6 {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
-}
-
-.right {
-  float: right;
-}
-
-.navbar-header {
-  width: 100%;
-}
-
-.form-control:focus,
-.form-control.focus {
-  outline: none;
-  background-image: none;
-  background-size: 100% 2px, 100% 1px;
-  box-shadow: none;
-  transition-duration: 0.3s;
-}
-
-.navbar-bottom {
-  border-top: 1px solid #eeeeee !important;
-  margin-bottom: 0;
-  background-color: #000;
-  position: fixed;
-  width: 100%;
-  z-index: 999999;
-  bottom: 0;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.navbar {
-  margin-bottom: 0;
-  background-color: #000;
-  position: fixed;
-  width: 100%;
-  z-index: 999999;
-}
+  -webkit-transition: height 2s; }
