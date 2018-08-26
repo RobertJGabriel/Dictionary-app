@@ -21,10 +21,48 @@
     <!-- Search Bar message -->
     <div class="navbar">
       <div class="is-empty  search">
-        <input type="text" class="form-control col-md-8" placeholder="Search" id="comment" v-model="search">
+        <form @submit.prevent="submit">
+          <input type="text" class="form-control col-md-8" placeholder="Search" v-model="search">
+        </form>
       </div>
 
 
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-2">
+
+      </div>
+      <div class="col-sm-8">
+        <h1>{{term}}</h1>
+        <h3>Meanings</h3>
+        <ul>
+          <li v-for="item in meanings ">
+            <div v-html="item.content"></div>
+          </li>
+        </ul>
+        
+
+
+        <h3>Etymology</h3>
+        <div v-html="etymology"></div>
+
+        <h3>Related</h3>
+        <ul>
+
+          <li v-for="item in related ">
+
+            <a :href="item.link" v-html="item.title"></a>
+
+          </li>
+        </ul>
+
+
+      </div>
+      <div class="col-sm-2">
+
+      </div>
     </div>
 
 
