@@ -17,57 +17,67 @@
 
 <body>
   <div id="app" class="container">
-
-    <!-- Search Bar message -->
-    <div class="navbar">
-      <div class="is-empty  search">
-        <form @submit.prevent="submit">
-          <input type="text" class="form-control col-md-8" placeholder="Search" v-model="search">
-        </form>
-      </div>
-    </div>
+    <div class="app">
 
 
-    <div class="row">
 
-      <div class="col-sm-8 col-sm-offset-2" v-if="isEmpty">
-        <h3>Ohh, we couldnt find anything for that search result</h3>
+      <!-- Search Bar message -->
+      <div class="navbar">
+        <div class="is-empty  search">
+          <form @submit.prevent="submit">
+            <input type="text" class="form-control col-md-8" placeholder="Search" v-model="search">
+          </form>
+        </div>
       </div>
 
-      <div class="col-sm-8 col-sm-offset-2" v-if="!isEmpty">
 
-        <div class="define">
-          <!-- Meanings -->
-          <h3 v-if="meanings.length > 0">Meanings</h3>
-          <ul class="meanings">
-            <li v-for="item in meanings " v-html="item.content , item.type"></li>
-          </ul>
+      <div class="row">
+
+
+          <div class="col-sm-8 col-sm-offset-2" v-if="isEmpty === null">
+              <p>Tip: Select text on any webpage either holder alt and right click, or  click the dicitory app to view the definition of your selection</p>
+            </div>
+
+        <div class="col-sm-8 col-sm-offset-2" v-if="isEmpty">
+          <p>No definition found.</p>
+          <a href="https://www.google.ie/search?q=${search}">Search the Google for '{{ search }}'</a>
         </div>
 
+        <div class="col-sm-8 col-sm-offset-2" v-if="!isEmpty">
 
-        <div class="define">
-          <!-- synonyms -->
-          <h3 v-if="synonyms.length > 0">Synonyms</h3>
-          <ul>
-            <li v-for="item in synonyms ">
-              <a :href="item.link" v-html="item.title" target="_blank"></a>,
-            </li>
-          </ul>
-        </div>
+          <div class="define" v-if="meanings.length > 0">
+            <!-- Meanings -->
+            <h3 >Meanings</h3>
+            <ul class="meanings">
+              <li v-for="item in meanings " v-html="item.content , item.type"></li>
+            </ul>
+          </div>
 
 
-        <div class="define">
-          <!-- related -->
-          <h3 v-if="related.length > 0">See more</h3>
-          <ul>
-            <li v-for="item in related ">
-              <a :href="item.link" v-html="item.title" target="_blank"></a>
-            </li>
-          </ul>
+          <div class="define"  v-if="synonyms.length > 0">
+            <!-- synonyms -->
+            <h3>Synonyms</h3>
+            <ul>
+              <li v-for="item in synonyms ">
+                <a :href="item.link" v-html="item.title" target="_blank"></a>,
+              </li>
+            </ul>
+          </div>
+
+
+          <div class="define"  v-if="related.length > 0">
+            <!-- related -->
+            <h3>See more</h3>
+            <ul>
+              <li v-for="item in related ">
+                <a :href="item.link" v-html="item.title" target="_blank"></a>
+              </li>
+            </ul>
+          </div>
+
         </div>
 
       </div>
-
     </div>
   </div>
 
