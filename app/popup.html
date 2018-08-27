@@ -10,7 +10,7 @@
   <!-- bower:css -->
   <!-- endbuild -->
 
-  <!-- build:css styles/main.css -->
+  <!-- build:css styles/popup.css -->
   <link href="styles/popup.css" rel="stylesheet">
   <!-- endbuild -->
 </head>
@@ -25,56 +25,55 @@
           <input type="text" class="form-control col-md-8" placeholder="Search" v-model="search">
         </form>
       </div>
-
-
     </div>
 
 
     <div class="row">
 
-      <div class="col-sm-8 col-sm-offset-2">
+      <div class="col-sm-8 col-sm-offset-2" v-if="isEmpty">
+        <h3>Ohh, we couldnt find anything for that search result</h3>
+      </div>
 
-        <!-- Meanings -->
-        <h3 v-if="meanings.length > 0">Meanings</h3>
-        <ul class="meanings">
-          <li v-for="item in meanings " v-html="item.content">
-          </li>
-        </ul>
+      <div class="col-sm-8 col-sm-offset-2" v-if="!isEmpty">
+
+        <div class="define">
+          <!-- Meanings -->
+          <h3 v-if="meanings.length > 0">Meanings</h3>
+          <ul class="meanings">
+            <li v-for="item in meanings " v-html="item.content , item.type"></li>
+          </ul>
+        </div>
 
 
-        <!-- etymology -->
-        <h3 v-if="etymology != ''">Etymology</h3>
-        <div v-html="etymology"></div>
+        <div class="define">
+          <!-- synonyms -->
+          <h3 v-if="synonyms.length > 0">Synonyms</h3>
+          <ul>
+            <li v-for="item in synonyms ">
+              <a :href="item.link" v-html="item.title" target="_blank"></a>,
+            </li>
+          </ul>
+        </div>
 
-        <!-- ipa -->
-        <h3 v-if="ipa.length > 1">Ipa</h3>
-        <ul>
-          <li v-for="item in  ipa ">
-            <p v-html="item.title"></p>
-          </li>
-        </ul>
 
-        <!-- related -->
-        <h3 v-if="related.length > 0">Related</h3>
-        <ul>
-          <li v-for="item in related ">
-            <a :href="item.link" v-html="item.title"></a>
-          </li>
-        </ul>
-
+        <div class="define">
+          <!-- related -->
+          <h3 v-if="related.length > 0">See more</h3>
+          <ul>
+            <li v-for="item in related ">
+              <a :href="item.link" v-html="item.title" target="_blank"></a>
+            </li>
+          </ul>
+        </div>
 
       </div>
 
     </div>
-
-
-
   </div>
 
 
   <!-- build:js scripts/vendor/vendor.js -->
   <script src="/bower_components/vue/dist/vue.js"></script>
-  <script src="/bower_components/vue-resource/dist/vue-resource.js"></script>
   <!-- endbuild -->
 
   <!-- build:js scripts/popup.js -->
