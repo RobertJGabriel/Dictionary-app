@@ -3,19 +3,18 @@
 var vm = new Vue({
   el: '#app',
   data: {
-    meanings: [],
-    errorMessage: '',
+
     search: '',
     loading: true,
-    paid: true,
     error: true,
 
 
     term: '',
     synonyms: [],
     related: [],
+    meanings: [],
     ipa: [],
-    etymology: []
+    etymology: ''
   },
 
   methods: {
@@ -79,12 +78,24 @@ var vm = new Vue({
             }
 
             if (response.etymology) {
-
               this.etymology = response.etymology;
-
             }
 
-            this.related = response.related ? response.related : '';
+
+
+            if (response.ipa) {
+              for (var i in response.ipa) {
+      
+                let newObject = {
+                  title: response.ipa[i],
+                }
+      
+                this.ipa.push(newObject);
+                console.log(this.ipa);
+              }
+            }
+
+  
             this.synonyms = response.synonyms ? response.synonyms : '';
             this.ipa = response.ipa ? response.ipa : '';
             

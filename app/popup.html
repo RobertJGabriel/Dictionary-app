@@ -31,38 +31,40 @@
 
 
     <div class="row">
-      <div class="col-sm-2">
 
-      </div>
-      <div class="col-sm-8">
-        <h1>{{term}}</h1>
-        <h3>Meanings</h3>
-        <ul>
-          <li v-for="item in meanings ">
-            <div v-html="item.content"></div>
+      <div class="col-sm-8 col-sm-offset-2">
+
+        <!-- Meanings -->
+        <h3 v-if="meanings.length > 0">Meanings</h3>
+        <ul class="meanings">
+          <li v-for="item in meanings " v-html="item.content">
           </li>
         </ul>
-        
 
 
-        <h3>Etymology</h3>
+        <!-- etymology -->
+        <h3 v-if="etymology != ''">Etymology</h3>
         <div v-html="etymology"></div>
 
-        <h3>Related</h3>
+        <!-- ipa -->
+        <h3 v-if="ipa.length > 1">Ipa</h3>
         <ul>
+          <li v-for="item in  ipa ">
+            <p v-html="item.title"></p>
+          </li>
+        </ul>
 
+        <!-- related -->
+        <h3 v-if="related.length > 0">Related</h3>
+        <ul>
           <li v-for="item in related ">
-
             <a :href="item.link" v-html="item.title"></a>
-
           </li>
         </ul>
 
 
       </div>
-      <div class="col-sm-2">
 
-      </div>
     </div>
 
 
@@ -70,11 +72,8 @@
   </div>
 
 
-  <!-- build:js scripts/vendor/vue.js -->
+  <!-- build:js scripts/vendor/vendor.js -->
   <script src="/bower_components/vue/dist/vue.js"></script>
-  <!-- endbuild -->
-
-  <!-- build:js scripts/vendor/vue-resource.js -->
   <script src="/bower_components/vue-resource/dist/vue-resource.js"></script>
   <!-- endbuild -->
 

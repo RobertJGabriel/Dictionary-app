@@ -4,7 +4,6 @@ const ROOT_ID = 'app_extension';
 const FORM_ID = `${ROOT_ID}_form`;
 
 // URL var ants.
-const EXTERN_LINK_TEMPLATE = 'http://en.wikipedia.org/wiki/%query%';
 const GOOGLE_LINK_TEMPLATE = 'http://www.google.com/search?q=%query%&tbs=dfn:1';
 const SPEAKER_ICON_URL = chrome.runtime.getURL('images/app/speaker.png');
 const EXTERNAL_ICON_URL = chrome.runtime.getURL('images/app/external.png');
@@ -191,12 +190,9 @@ function createHtmlFromLookup(query, dict_entry) {
       BUFFER.push('<em class="suggestion">');
       BUFFER.push('Did you mean ');
       for (var i = 0; i < dict_entry.suggestions.length; i++) {
-        var extern_link = EXTERN_LINK_TEMPLATE.replace(
-          '%query%',
-          dict_entry.suggestions[i]
-        );
+
         BUFFER.push(
-          `<a href="${extern_link}" target="_blank">${dict_entry.suggestions[i]}</a>`
+          `<a href="http://en.wikipedia.org/wiki/${dict_entry.suggestions[i]}" target="_blank">${dict_entry.suggestions[i]}</a>`
         );
         if (i === dict_entry.suggestions.length - 1) {
           BUFFER.push('?');
@@ -226,9 +222,9 @@ function createHtmlFromLookup(query, dict_entry) {
   } else {
     // Header with formatted query and pronunciation.
     BUFFER.push(`<div class="${ROOT_ID}_header">`);
-    var extern_link = EXTERN_LINK_TEMPLATE.replace('%query%', dict_entry.term || query);
+
     BUFFER.push(
-      `<a class="${ROOT_ID}_title" href="${extern_link}" target="_blank">${dict_entry.term || query}</a>`
+      `<a class="${ROOT_ID}_title" href="http://en.wikipedia.org/wiki/${dict_entry.term || query}" target="_blank">${dict_entry.term || query}</a>`
     );
 
     if (dict_entry.ipa && dict_entry.ipa.length) {
@@ -263,12 +259,8 @@ function createHtmlFromLookup(query, dict_entry) {
 
       BUFFER.push(`<p id="${ROOT_ID}_synonyms">`);
       for (var i in dict_entry.synonyms) {
-        var extern_link = EXTERN_LINK_TEMPLATE.replace(
-          '%query%',
-          dict_entry.synonyms[i]
-        );
         BUFFER.push(
-          `<a href="${extern_link}" target="_blank">${dict_entry.synonyms[i]}</a>`
+          `<a href="http://en.wikipedia.org/wiki/${ dict_entry.synonyms[i]}" target="_blank">${dict_entry.synonyms[i]}</a>`
         );
         if (i < dict_entry.synonyms.length - 1) {
           BUFFER.push(', ');
@@ -286,11 +278,7 @@ function createHtmlFromLookup(query, dict_entry) {
 
       BUFFER.push(`<p id="${ROOT_ID}_related">`);
       for (var i in dict_entry.related) {
-        var extern_link = EXTERN_LINK_TEMPLATE.replace(
-          '%query%',
-          dict_entry.related[i]
-        );
-        BUFFER.push(`<a href="${extern_link}">${dict_entry.related[i]}</a>`);
+        BUFFER.push(`<a href="http://en.wikipedia.org/wiki/${dict_entry.related[i]}">${dict_entry.related[i]}</a>`);
         if (i < dict_entry.related.length - 1) {
           BUFFER.push(', ');
         }

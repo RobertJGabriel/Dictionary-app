@@ -76,3 +76,17 @@ ul {
   padding: 0px 10px;
   margin: 0px;
   -webkit-transition: height 2s; }
+
+ul {
+  padding-bottom: 80px; }
+  ul li {
+    float: left;
+    margin-right: 5px; }
+
+.meanings li {
+  width: 100%; }
+  .meanings li .label {
+    text-align: left;
+    font-size: medium;
+    background-color: transparent;
+    color: black; }
