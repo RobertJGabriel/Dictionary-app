@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "dependencies": {
+    "bootstrap-material-design": "^0.5.10",
+    "bootstrap": "^3.3.7",
+    "vue": "2.5.16",
+    "vue-resource": "1.5.1",
+    "components-font-awesome": "5.0.6",
     "Font-Awesome": "https://github.com/FortAwesome/Font-Awesome.git#^5.2.0"
   },
   "devDependencies": {
