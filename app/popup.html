@@ -27,12 +27,13 @@
           </form>
         </div>
       </div>
-      
+
       <div class="row">
 
         <div class="col-sm-8 col-sm-offset-2" v-if="isEmpty === null">
-          <p>Tip: Select text on any webpage either holder alt and right click, or click the dicitory app to view the definition of your
-            selection</p>
+          <p>Tip: Select text on any webpage either holder alt and right click, or click the dicitory app to view the definition
+            of your selection
+          </p>
         </div>
 
         <div class="col-sm-8 col-sm-offset-2" v-if="isEmpty">
@@ -45,7 +46,9 @@
           <!-- Meanings -->
           <div class="define" v-if="meanings.length > 0">
             <h3> Meanings</h3>
-            <ul class="meanings"></ul>
+            <ul class="meanings">
+              <li v-for="item in meanings " v-html="item.content , item.type"></li>
+            </ul>
           </div>
 
           <!-- synonyms -->
