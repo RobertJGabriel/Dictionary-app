@@ -4,9 +4,8 @@ const ROOT_ID = 'app_extension';
 const FORM_ID = `${ROOT_ID}_form`;
 
 // URL var ants.
-const EXTERN_LINK_TEMPLATE = 'http://en.wikipedia.org/wiki/%query%';
-const GOOGLE_LINK_TEMPLATE = 'http://www.google.com/search?q=%query%&tbs=dfn:1';
-const SPEAKER_ICON_URL = chrome.runtime.getURL('images/app/speaker.png');
+const EXTERN_LINK_TEMPLATE = 'http://en.wikipedia.org/wiki/';
+const GOOGLE_LINK_TEMPLATE = 'http://www.google.com/search?q=';
 const EXTERNAL_ICON_URL = chrome.runtime.getURL('images/app/external.png');
 
 // Internal global vars.
@@ -83,7 +82,6 @@ function createPopup(query, x, y, windowX, windowY) {
 
   // Start loading frame data.
   chrome.runtime.sendMessage({
-      method: 'lookup',
       arg: query
     },
     response => {
@@ -173,136 +171,124 @@ function stripLinks(text) {
  */
 function createHtmlFromLookup(query, dict_entry) {
 
-  const BUFFER = [];
+  let injectedHTML = '';
 
-  BUFFER.push(`<div id="${ROOT_ID}_content">`);
+  injectedHTML += `<div id="${ROOT_ID}_content">`;
 
   if (!dict_entry.meanings || dict_entry.meanings.length === 0) {
-    BUFFER.push(
+    injectedHTML +=
       `
       <div class='app_extension_parent'>
         <div class='app_extension_child'>
-      `
-    );
-    BUFFER.push(`No definitions for <strong>${query}</strong>.`);
+          No definitions for <strong>${query}</strong>.
+      `;
+
     if (dict_entry.suggestions) {
       // Offer suggestions.
-      BUFFER.push('<br /><br />');
-      BUFFER.push('<em class="suggestion">');
-      BUFFER.push('Did you mean ');
+
+      injectedHTML += `
+        <br /><br />
+        <em class="suggestion">
+          Did you mean`;
+
       for (var i = 0; i < dict_entry.suggestions.length; i++) {
-        var extern_link = EXTERN_LINK_TEMPLATE.replace(
-          '%query%',
-          dict_entry.suggestions[i]
-        );
-        BUFFER.push(
-          `<a href="${extern_link}" target="_blank">${dict_entry.suggestions[i]}</a>`
-        );
+
+        var extern_link = `${EXTERN_LINK_TEMPLATE}${dict_entry.suggestions[i]}`;
+        injectedHTML += `<a href="${extern_link}" target="_blank">${dict_entry.suggestions[i]}</a>`;
         if (i === dict_entry.suggestions.length - 1) {
-          BUFFER.push('?');
+          injectedHTML += '?';
         } else if (i === dict_entry.suggestions.length - 2) {
-          BUFFER.push(' or ');
+          injectedHTML += ' or ';
         } else {
-          BUFFER.push(', ');
+          injectedHTML += ', ';
         }
       }
-      BUFFER.push('</em>');
+      injectedHTML += '</em>';
     }
 
     // Suggest other sources.
-    BUFFER.push(
+    injectedHTML +=
       `
           <br/><br/>
           Try the same query in
-          <a class="alternate_source" href="${GOOGLE_LINK_TEMPLATE.replace('%query%', query)}" target="_blank">
+          <a class="alternate_source" href="${GOOGLE_LINK_TEMPLATE}${query}" target="_blank">
             Google
           </a>
         </div>
       </div>
-      `
-    );
+      `;
 
 
   } else {
     // Header with formatted query and pronunciation.
-    BUFFER.push(`<div class="${ROOT_ID}_header">`);
-    var extern_link = EXTERN_LINK_TEMPLATE.replace('%query%', dict_entry.term || query);
-    BUFFER.push(
-      `<a class="${ROOT_ID}_title" href="${extern_link}" target="_blank">${dict_entry.term || query}</a>`
-    );
+    injectedHTML += `<div class="${ROOT_ID}_header">`;
+    var extern_link = `${EXTERN_LINK_TEMPLATE}${ dict_entry.term || query}`;
+    injectedHTML += `<a class="${ROOT_ID}_title" href="${extern_link}" target="_blank">${dict_entry.term || query}</a>`
 
     if (dict_entry.ipa && dict_entry.ipa.length) {
       for (var i in dict_entry.ipa) {
-        BUFFER.push(`<span class="${ROOT_ID}_phonetic" title ="Phonetic"> ${dict_entry.ipa[i]}</span>`);
+        injectedHTML += `<span class="${ROOT_ID}_phonetic" title ="Phonetic"> ${dict_entry.ipa[i]}</span>`;
       }
     }
 
 
-    BUFFER.push('</div>');
+    injectedHTML += '</div>';
 
     // Meanings.
-    BUFFER.push(`<ul id="${ROOT_ID}_meanings">`);
+    injectedHTML += `<ul id="${ROOT_ID}_meanings">`;
     for (var i in dict_entry.meanings) {
       const meaning = dict_entry.meanings[i];
-      BUFFER.push('<li>');
+      injectedHTML += '<li>';
       meaning.content = stripLinks(meaning.content);
-      BUFFER.push(meaning.content);
+      injectedHTML += meaning.content;
 
-      BUFFER.push(
-        `<span class="${ROOT_ID}_pos">${meaning.type}</span>`
-      );
+      injectedHTML +=
+        `<span class="${ROOT_ID}_pos">${meaning.type}</span>`;
 
-      BUFFER.push('</li>');
+      injectedHTML += '</li>';
     }
-    BUFFER.push('</ul>');
+    injectedHTML += '</ul>';
 
     // Synonyms
     if (dict_entry.synonyms && dict_entry.synonyms.length) {
-      BUFFER.push(`<hr class="${ROOT_ID}_separator " />`);
-      BUFFER.push(`<div class="${ROOT_ID}_subtitle">Synonyms</div>`);
+      injectedHTML += `
+      <hr class="${ROOT_ID}_separator " />
+        <div class="${ROOT_ID}_subtitle">Synonyms</div>`;
 
-      BUFFER.push(`<p id="${ROOT_ID}_synonyms">`);
+      injectedHTML += `<p id="${ROOT_ID}_synonyms">`;
       for (var i in dict_entry.synonyms) {
-        var extern_link = EXTERN_LINK_TEMPLATE.replace(
-          '%query%',
-          dict_entry.synonyms[i]
-        );
-        BUFFER.push(
-          `<a href="${extern_link}" target="_blank">${dict_entry.synonyms[i]}</a>`
-        );
+        var extern_link = `${EXTERN_LINK_TEMPLATE}${dict_entry.synonyms[i]}`;
+        injectedHTML += `<a href="${extern_link}" target="_blank">${dict_entry.synonyms[i]}</a>`;
         if (i < dict_entry.synonyms.length - 1) {
-          BUFFER.push(', ');
+          injectedHTML += ', ';
         }
       }
-      BUFFER.push('</p>');
+      injectedHTML += '</p>';
     }
 
 
 
     // Related
     if (dict_entry.related && dict_entry.related.length) {
-      BUFFER.push(`<hr class="${ROOT_ID}_separator" />`);
-      BUFFER.push(`<div class="${ROOT_ID}_subtitle">See also</div>`);
+      injectedHTML += `<hr class="${ROOT_ID}_separator" />
+      <div class="${ROOT_ID}_subtitle">See also</div>`;
 
-      BUFFER.push(`<p id="${ROOT_ID}_related">`);
+      injectedHTML += `<p id="${ROOT_ID}_related">`;
       for (var i in dict_entry.related) {
-        var extern_link = EXTERN_LINK_TEMPLATE.replace(
-          '%query%',
-          dict_entry.related[i]
-        );
-        BUFFER.push(`<a href="${extern_link}">${dict_entry.related[i]}</a>`);
+        var extern_link = `${EXTERN_LINK_TEMPLATE}${dict_entry.related[i]}`;
+        injectedHTML += `<a href="${extern_link}">${dict_entry.related[i]}</a>`;
         if (i < dict_entry.related.length - 1) {
-          BUFFER.push(', ');
+          injectedHTML += ', ';
         }
       }
-      BUFFER.push('</p>');
+      injectedHTML += '</p>';
     }
   }
 
-  BUFFER.push(`<div id="${ROOT_ID}_spacer"></div>`);
-  BUFFER.push('</div>');
+  injectedHTML += `<div id="${ROOT_ID}_spacer"></div>`;
+  injectedHTML += '</div>';
 
-  return BUFFER.join('');
+  return injectedHTML;
 }
 
 // Returns a trimmed version of the currently selected text.

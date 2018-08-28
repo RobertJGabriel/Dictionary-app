@@ -1,10 +1,7 @@
-'use strict'
-
-var vm = new Vue({
+const vm = new Vue({
   el: '#app',
   data: {
     search: '',
-    loading: true,
     isEmpty: null,
     term: '',
     synonyms: [],
@@ -14,10 +11,10 @@ var vm = new Vue({
   },
 
   methods: {
-    stripLinks: function (text) {
+    stripLinks(text) {
       return text.replace(/<a[^>]*>([^<>]*)<\/a>/g, '$1');
     },
-    submit: function () {
+    submit() {
 
       let query = this.search;
 
@@ -26,7 +23,6 @@ var vm = new Vue({
       }
       // Start loading frame data.
       chrome.runtime.sendMessage({
-          method: 'lookup',
           arg: query
         },
         response => {
@@ -91,7 +87,7 @@ var vm = new Vue({
       );
     }
   }
-})
+});
 
 
 // Set config settings

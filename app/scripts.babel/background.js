@@ -1,7 +1,3 @@
-const DICT_API_URL = 'http://dictionary-lookup.org/%query%';
-
-
-
 /**
  * Helper to send api requests
  * @param  {} url
@@ -43,19 +39,14 @@ function sendRequest(url, sendResponse) {
  */
 chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
   const method = request.method;
-  if (method === 'lookup') {
-    // Look up a term from the dictionary using the Ajax API.
-    const lookupURL = DICT_API_URL.replace('%query%', request.arg);
-    sendRequest(lookupURL)
-      .then(resp => {
-        sendResponse(resp || '{}');
-      })
-      .catch(error => {
-        sendResponse('{}');
-      });
-    return true; // Inform Chrome that we will make a delayed sendResponse
-  }
-  if ( method !== 'lookup') {
-    sendResponse('');
-  }
+  // Look up a term from the dictionary using the Ajax API.
+  const lookupURL = `http://dictionary-lookup.org/${request.arg}`;
+  sendRequest(lookupURL)
+    .then(resp => {
+      sendResponse(resp || '{}');
+    })
+    .catch(error => {
+      sendResponse('{}');
+    });
+  return true; // Inform Chrome that we will make a delayed sendResponse
 });
