@@ -21,9 +21,7 @@ const frameHeight = 'auto';
  */
 function initialize() {
   // Set event listeners.
-  setTimeout(() => {
-    window.addEventListener('click', handleClick, false);
-  }, 500);
+  window.addEventListener('click', handleClick, false);
 }
 
 
@@ -36,7 +34,7 @@ function handleClick(e) {
   const alt = e.altKey ? e.altKey : ((key === 17) ? true : false); // alt detection
 
   if (!event.target.closest(ROOT_ID)) {
-    removePopup(true, true);
+    removePopup();
   }
 
   const QUERY = getTrimmedSelection(); // If the modifier is held down and we have a selection, create a pop-up.
@@ -52,6 +50,7 @@ function handleClick(e) {
   }
 }
 
+
 /**
  * Create and fade in the dictionary popup frame and button.
  * @param  {} query
@@ -65,10 +64,8 @@ function createPopup(query, x, y, windowX, windowY) {
   const FRAME_REFFERENCE = document.getElementById(ROOT_ID);
 
   if (FRAME_REFFERENCE) { // If an old frame still exists, wait until it is killed.
-    removePopup(true, false); // Remove the old one.
-    setTimeout(() => {
-      createPopup(query, x, y, windowX, windowY);
-    }, 100);
+    removePopup(); // Remove the old one.
+    createPopup(query, x, y, windowX, windowY);
     return;
   }
 
@@ -91,7 +88,6 @@ function createPopup(query, x, y, windowX, windowY) {
         for (let i = 0; i < WRAPPER.childNodes.length; i++) {
           FRAME.appendChild(WRAPPER.childNodes[i]);
         }
-
       }
     }
   );
@@ -136,10 +132,10 @@ function createPopup(query, x, y, windowX, windowY) {
  * @param  {} do_frame
  * @param  {} do_form
  */
-function removePopup(do_frame, do_form) {
+function removePopup() {
   const form = document.getElementById(FORM_ID);
 
-  if (form && do_form) {
+  if (form) {
     body.removeChild(form);
   }
 
@@ -147,14 +143,14 @@ function removePopup(do_frame, do_form) {
   const FRAME_REFFERENCE = document.getElementById(ROOT_ID);
   const FRAME_CLASS = FRAME_REFFERENCE ? FRAME_REFFERENCE.className : null;
 
-  if (FRAME_REFFERENCE && do_frame) {
-    setTimeout(() => {
-      const FRAME_REFFERENCE = document.getElementById(ROOT_ID);
-      // Check if the currently displayed frame is still the same as the old one.
-      if (FRAME_REFFERENCE && FRAME_REFFERENCE.className === FRAME_CLASS) {
-        body.removeChild(FRAME_REFFERENCE);
-      }
-    }, 400);
+  if (FRAME_REFFERENCE) {
+
+    const FRAME_REFFERENCE = document.getElementById(ROOT_ID);
+    // Check if the currently displayed frame is still the same as the old one.
+    if (FRAME_REFFERENCE && FRAME_REFFERENCE.className === FRAME_CLASS) {
+      body.removeChild(FRAME_REFFERENCE);
+    }
+
   }
 }
 
@@ -163,6 +159,125 @@ function removePopup(do_frame, do_form) {
  */
 function stripLinks(text) {
   return text.replace(/<a[^>]*>([^<>]*)<\/a>/g, '$1');
+}
+
+
+/**
+ * @param  {} dict_entry
+ */
+function renderSuggestions(dict_entry) {
+  let injectedHTML =
+    `
+  <div class='app_extension_parent'>
+    <div class='app_extension_child'>
+      No definitions for <strong>${query}</strong>.
+  `;
+
+  if (dict_entry.suggestions) {
+    // Offer suggestions.
+
+    injectedHTML += `
+
+    <em class="suggestion">
+      Did you mean`;
+
+    for (var i = 0; i < dict_entry.suggestions.length; i++) {
+
+      var extern_link = `${EXTERN_LINK_TEMPLATE}${dict_entry.suggestions[i]}`;
+      injectedHTML += `<a href="${extern_link}" target="_blank">${dict_entry.suggestions[i]}</a>`;
+      if (i === dict_entry.suggestions.length - 1) {
+        injectedHTML += '?';
+      } else if (i === dict_entry.suggestions.length - 2) {
+        injectedHTML += ' or ';
+      } else {
+        injectedHTML += ', ';
+      }
+    }
+    injectedHTML += '</em>';
+  }
+
+  // Suggest other sources.
+  injectedHTML +=
+    `
+      <br/><br/>
+      Try the same query in
+      <a class="alternate_source" href="${GOOGLE_LINK_TEMPLATE}${query}" target="_blank">
+        Google
+      </a>
+    </div>
+  </div>
+  `;
+  return injectedHTML;
+}
+
+/**
+ * @param  {} dict_entry
+ */
+function renderPronunciation(dict_entry) {
+
+  // Header with formatted query and pronunciation.
+  let injectedHTML = `<div class="${ROOT_ID}_header">`;
+  var extern_link = `${EXTERN_LINK_TEMPLATE}${ dict_entry.term || query}`;
+  injectedHTML += `<a class="${ROOT_ID}_title" href="${extern_link}" target="_blank">${dict_entry.term || query}</a>`
+
+  if (dict_entry.ipa && dict_entry.ipa.length) {
+    for (var i in dict_entry.ipa) {
+      injectedHTML += `<span class="${ROOT_ID}_phonetic" title ="Phonetic"> ${dict_entry.ipa[i]}</span>`;
+    }
+  }
+
+  injectedHTML += '</div>';
+  // Meanings.
+  injectedHTML += `<ul id="${ROOT_ID}_meanings">`;
+  for (var i in dict_entry.meanings) {
+    const meaning = dict_entry.meanings[i];
+    injectedHTML += '<li>';
+    meaning.content = stripLinks(meaning.content);
+    injectedHTML += meaning.content;
+
+    injectedHTML +=
+      `<span class="${ROOT_ID}_pos">${meaning.type}</span>`;
+
+    injectedHTML += '</li>';
+  }
+  injectedHTML += '</ul>';
+
+  // Synonyms
+  if (dict_entry.synonyms && dict_entry.synonyms.length) {
+    injectedHTML += `
+      <hr class="${ROOT_ID}_separator " />
+        <div class="${ROOT_ID}_subtitle">Synonyms</div>`;
+
+    injectedHTML += `<p id="${ROOT_ID}_synonyms">`;
+    for (var i in dict_entry.synonyms) {
+      var extern_link = `${EXTERN_LINK_TEMPLATE}${dict_entry.synonyms[i]}`;
+      injectedHTML += `<a href="${extern_link}" target="_blank">${dict_entry.synonyms[i]}</a>`;
+      if (i < dict_entry.synonyms.length - 1) {
+        injectedHTML += ', ';
+      }
+    }
+    injectedHTML += '</p>';
+  }
+
+
+
+  // Related
+  if (dict_entry.related && dict_entry.related.length) {
+    injectedHTML += `<hr class="${ROOT_ID}_separator" />
+      <div class="${ROOT_ID}_subtitle">See also</div>`;
+
+    injectedHTML += `<p id="${ROOT_ID}_related">`;
+    for (var i in dict_entry.related) {
+      var extern_link = `${EXTERN_LINK_TEMPLATE}${dict_entry.related[i]}`;
+      injectedHTML += `<a href="${extern_link}">${dict_entry.related[i]}</a>`;
+      if (i < dict_entry.related.length - 1) {
+        injectedHTML += ', ';
+      }
+    }
+    injectedHTML += '</p>';
+  }
+
+  return injectedHTML;
 }
 
 /**
@@ -176,113 +291,12 @@ function createHtmlFromLookup(query, dict_entry) {
   injectedHTML += `<div id="${ROOT_ID}_content">`;
 
   if (!dict_entry.meanings || dict_entry.meanings.length === 0) {
-    injectedHTML +=
-      `
-      <div class='app_extension_parent'>
-        <div class='app_extension_child'>
-          No definitions for <strong>${query}</strong>.
-      `;
 
-    if (dict_entry.suggestions) {
-      // Offer suggestions.
-
-      injectedHTML += `
-        <br /><br />
-        <em class="suggestion">
-          Did you mean`;
-
-      for (var i = 0; i < dict_entry.suggestions.length; i++) {
-
-        var extern_link = `${EXTERN_LINK_TEMPLATE}${dict_entry.suggestions[i]}`;
-        injectedHTML += `<a href="${extern_link}" target="_blank">${dict_entry.suggestions[i]}</a>`;
-        if (i === dict_entry.suggestions.length - 1) {
-          injectedHTML += '?';
-        } else if (i === dict_entry.suggestions.length - 2) {
-          injectedHTML += ' or ';
-        } else {
-          injectedHTML += ', ';
-        }
-      }
-      injectedHTML += '</em>';
-    }
-
-    // Suggest other sources.
-    injectedHTML +=
-      `
-          <br/><br/>
-          Try the same query in
-          <a class="alternate_source" href="${GOOGLE_LINK_TEMPLATE}${query}" target="_blank">
-            Google
-          </a>
-        </div>
-      </div>
-      `;
-
+    injectedHTML += renderSuggestions(dict_entry); // Render suggestions
 
   } else {
-    // Header with formatted query and pronunciation.
-    injectedHTML += `<div class="${ROOT_ID}_header">`;
-    var extern_link = `${EXTERN_LINK_TEMPLATE}${ dict_entry.term || query}`;
-    injectedHTML += `<a class="${ROOT_ID}_title" href="${extern_link}" target="_blank">${dict_entry.term || query}</a>`
 
-    if (dict_entry.ipa && dict_entry.ipa.length) {
-      for (var i in dict_entry.ipa) {
-        injectedHTML += `<span class="${ROOT_ID}_phonetic" title ="Phonetic"> ${dict_entry.ipa[i]}</span>`;
-      }
-    }
-
-
-    injectedHTML += '</div>';
-
-    // Meanings.
-    injectedHTML += `<ul id="${ROOT_ID}_meanings">`;
-    for (var i in dict_entry.meanings) {
-      const meaning = dict_entry.meanings[i];
-      injectedHTML += '<li>';
-      meaning.content = stripLinks(meaning.content);
-      injectedHTML += meaning.content;
-
-      injectedHTML +=
-        `<span class="${ROOT_ID}_pos">${meaning.type}</span>`;
-
-      injectedHTML += '</li>';
-    }
-    injectedHTML += '</ul>';
-
-    // Synonyms
-    if (dict_entry.synonyms && dict_entry.synonyms.length) {
-      injectedHTML += `
-      <hr class="${ROOT_ID}_separator " />
-        <div class="${ROOT_ID}_subtitle">Synonyms</div>`;
-
-      injectedHTML += `<p id="${ROOT_ID}_synonyms">`;
-      for (var i in dict_entry.synonyms) {
-        var extern_link = `${EXTERN_LINK_TEMPLATE}${dict_entry.synonyms[i]}`;
-        injectedHTML += `<a href="${extern_link}" target="_blank">${dict_entry.synonyms[i]}</a>`;
-        if (i < dict_entry.synonyms.length - 1) {
-          injectedHTML += ', ';
-        }
-      }
-      injectedHTML += '</p>';
-    }
-
-
-
-    // Related
-    if (dict_entry.related && dict_entry.related.length) {
-      injectedHTML += `<hr class="${ROOT_ID}_separator" />
-      <div class="${ROOT_ID}_subtitle">See also</div>`;
-
-      injectedHTML += `<p id="${ROOT_ID}_related">`;
-      for (var i in dict_entry.related) {
-        var extern_link = `${EXTERN_LINK_TEMPLATE}${dict_entry.related[i]}`;
-        injectedHTML += `<a href="${extern_link}">${dict_entry.related[i]}</a>`;
-        if (i < dict_entry.related.length - 1) {
-          injectedHTML += ', ';
-        }
-      }
-      injectedHTML += '</p>';
-    }
+    injectedHTML += renderPronunciation(dict_entry); // Render suggestions
   }
 
   injectedHTML += `<div id="${ROOT_ID}_spacer"></div>`;

@@ -16,13 +16,13 @@ function sendRequest(url, sendResponse) {
           resolve(respJson);
         } else {
           reject(xhr.status);
-          console.log('xhr failed');
+         // console.log('xhr failed');
         }
       } else {
-        console.log('xhr processing going on');
+       // console.log('xhr processing going on');
       }
     }
-    console.log('request sent succesfully');
+    //console.log('request sent succesfully');
   });
   return promiseObj;
 }
