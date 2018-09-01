@@ -1,0 +1,102 @@
+.app {
+  height: fit-content;
+  max-width: 560px;
+  min-width: 560px;
+  overflow: auto;
+  width: 560px;
+  background-color: #EEEEEE !important;
+  -webkit-transition: height 2s;
+  transition: height 2s;
+  padding-bottom: 20px; }
+
+.container {
+  padding: 0 !important; }
+
+.errorMessage {
+  background-color: #fff !important;
+  height: 50px;
+  padding: 0px !important; }
+  .errorMessage > p {
+    font-size: 12px;
+    line-height: 50px;
+    color: #000; }
+
+.padding-top {
+  padding-top: 20px; }
+
+.categories > li > i {
+  background-position: center;
+  background-repeat: no-repeat; }
+
+.row {
+  margin: 0 !important;
+  margin-top: 50px; }
+
+ul {
+  list-style: none; }
+
+.label {
+  padding: 5px;
+  display: grid; }
+
+.list {
+  margin-top: 20px;
+  margin-bottom: 20px; }
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 275px; }
+  .ellipsis:hover {
+    overflow: visible; }
+
+.click {
+  cursor: pointer; }
+
+.search {
+  background: #00C853;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+  padding: 10px;
+  margin-bottom: 0;
+  color: #fff;
+  padding: 9px 12px;
+  margin-bottom: 0px; }
+  .search form > input {
+    padding: 10px;
+    margin-bottom: 0;
+    background: #B9F6CA;
+    color: #818181;
+    padding: 6px 12px;
+    margin-bottom: 0px; }
+
+.message {
+  padding: 20px;
+  background-color: black !important;
+  margin-bottom: 0; }
+
+.search-bottom {
+  padding: 0px 10px;
+  margin: 0px;
+  -webkit-transition: height 2s; }
+
+ul {
+  display: table; }
+  ul li {
+    float: left;
+    margin-right: 5px; }
+
+.meanings li {
+  width: 100%; }
+  .meanings li .label {
+    text-align: left;
+    font-size: small;
+    background-color: transparent;
+    color: #000;
+    display: inline-table;
+    padding: 0px;
+    padding-right: 5px; }
+
+.define {
+  padding-bottom: 15px;
+  border-bottom: 1px solid slategray; }

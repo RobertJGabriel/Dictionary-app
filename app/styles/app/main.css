@@ -1,0 +1,144 @@
+#app_extension, #app_extension_form, #app_extension *, #app_extension_form * {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  textension-align: left;
+  white-space: none;
+  word-spacing: none;
+  letter-spacing: none;
+  line-height: 1.2em;
+  background-color: #f6f9fc;
+  color: #525f7f;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  position: relative;
+  display: block;
+  overflow: show;
+  float: none;
+  clear: none;
+  opacity: 1;
+  visibility: visible;
+  list-style: none; }
+
+#app_extension {
+  opacity: 1;
+  position: absolute;
+  z-index: 65000;
+  margin: 0px;
+  font-size: 14px;
+  padding: 40px 40px 40px 120px;
+  background-color: #f6f9fc;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+  -webkit-transition-property: color, background-color, -webkit-box-shadow, -webkit-transform;
+  transition-property: color, background-color, -webkit-box-shadow, -webkit-transform;
+  transition-property: color, background-color, box-shadow, transform;
+  transition-property: color, background-color, box-shadow, transform, -webkit-box-shadow, -webkit-transform;
+  -webkit-transition-duration: .15s;
+  transition-duration: .15s;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0px 0px 18px;
+  padding: 30px;
+  overflow: auto; }
+  #app_extension img {
+    height: auto;
+    width: auto; }
+  #app_extension span, #app_extension img, #app_extension a, #app_extension em, #app_extension strong {
+    display: inline-table; }
+  #app_extension span, #app_extension div {
+    margin: 0px;
+    padding: 0px; }
+  #app_extension a {
+    color: #6772e5; }
+    #app_extension a:hover {
+      color: #32325d; }
+  #app_extension ol, #app_extension ul {
+    display: list;
+    margin-top: 1em;
+    margin-bottom: 1em; }
+  #app_extension ol li {
+    list-style-type: circle; }
+  #app_extension li {
+    display: list-item;
+    margin-top: 0.2em; }
+  #app_extension ul, #app_extension ol {
+    margin-top: 1em;
+    padding-left: 2.5em; }
+  #app_extension ul ul, #app_extension ol ul, #app_extension ul ol, #app_extension ol ol {
+    margin-top: 1em;
+    padding-left: 1.5em; }
+  #app_extension strong {
+    font-weight: bold; }
+  #app_extension em {
+    font-style: italic; }
+  #app_extension p {
+    margin-left: 10px;
+    margin-top: 10px; }
+
+#app_extension_form {
+  background: #f6f9fc;
+  padding: 10px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  opacity: 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0px 0px 18px; }
+
+#app_extension_shader {
+  opacity: 0;
+  -webkit-transition: opacity 0.35s linear; }
+
+#app_extension_content {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: inherit;
+  width: auto;
+  padding-right: 10px; }
+
+#app_extension_spacer {
+  height: 20px; }
+
+#app_extension .app_extension_title {
+  font-weight: bold;
+  font-size: 125%;
+  textension-decoration: none;
+  color: #525f7f; }
+
+#app_extension .app_extension_phonetic {
+  margin-left: 1em;
+  white-space: nowrap; }
+
+#app_extension .app_extension_subtitle {
+  font-weight: bold;
+  padding-top: 10px; }
+
+#app_extension .app_extension_separator {
+  margin: 20px auto 10px auto;
+  height: 0px;
+  width: 100%;
+  border: none;
+  border-top: 1px solid #AAA;
+  opacity: 0.75; }
+
+#app_extension .app_extension_parent {
+  display: table;
+  padding-top: 3em;
+  width: 100%; }
+
+#app_extension .app_extension_child {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle; }
+
+#app_extension .app_extension_pos {
+  color: #666666;
+  font-size: 0.85em;
+  white-space: nowrap;
+  display: inline-block;
+  textension-transform: lowercase; }
+
+#app_extension .alternate_source {
+  textension-decoration: none;
+  color: #6772e5; }
+  #app_extension .alternate_source:hover {
+    textension-decoration: underline;
+    color: #32325d; }
