@@ -6,7 +6,6 @@ const FORM_ID = `${ROOT_ID}_form`;
 // URL var ants.
 const EXTERN_LINK_TEMPLATE = 'http://en.wikipedia.org/wiki/';
 const GOOGLE_LINK_TEMPLATE = 'http://www.google.com/search?q=';
-const EXTERNAL_ICON_URL = chrome.runtime.getURL('images/app/external.png');
 
 // Internal global vars.
 const body = document.getElementsByTagName('body')[0];
