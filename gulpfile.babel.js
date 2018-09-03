@@ -137,11 +137,7 @@ gulp.task('size', () => {
 gulp.task('css', function () {
   return gulp.src('./app/styles/app/*.sass')
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./app/styles/'));
-  return gulp.src('dist/**/*').pipe($.size({
-    title: 'build',
-    gzip: true
-  }));
+    .pipe(gulp.dest('./app/styles/app/'));
 });
 
 
@@ -163,7 +159,8 @@ gulp.task('package', () => {
 
 gulp.task('build', cb => {
   runSequence(
-    'lint', 'babel', 'chromeManifest', ['html','css', 'images', 'extras'],
+    'html',
+    'lint', 'babel', 'images', 'extras', 'chromeManifest',
     'size', cb);
 });
 

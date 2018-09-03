@@ -1,25 +1,16 @@
 .app {
-  height: fit-content;
+  height: -webkit-fill-available;
   max-width: 560px;
   min-width: 560px;
   overflow: auto;
   width: 560px;
-  background-color: #EEEEEE !important;
+  background-color: #f6f9fc;
   -webkit-transition: height 2s;
   transition: height 2s;
   padding-bottom: 20px; }
 
 .container {
   padding: 0 !important; }
-
-.errorMessage {
-  background-color: #fff !important;
-  height: 50px;
-  padding: 0px !important; }
-  .errorMessage > p {
-    font-size: 12px;
-    line-height: 50px;
-    color: #000; }
 
 .padding-top {
   padding-top: 20px; }
@@ -37,7 +28,11 @@ ul {
 
 .label {
   padding: 5px;
-  display: grid; }
+  display: grid;
+  font-weight: bold !important; }
+
+form {
+  margin-bottom: 0; }
 
 .list {
   margin-top: 20px;
@@ -59,7 +54,6 @@ ul {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
   padding: 10px;
   margin-bottom: 0;
-  color: #fff;
   padding: 9px 12px;
   margin-bottom: 0px; }
   .search form > input {
@@ -72,7 +66,7 @@ ul {
 
 .message {
   padding: 20px;
-  background-color: black !important;
+  background-color: #525f7f !important;
   margin-bottom: 0; }
 
 .search-bottom {
@@ -85,6 +79,12 @@ ul {
   ul li {
     float: left;
     margin-right: 5px; }
+    ul li a {
+      text-decoration: none;
+      color: #6772e5; }
+      ul li a:hover {
+        textension-decoration: underline;
+        color: #32325d; }
 
 .meanings li {
   width: 100%; }
@@ -92,7 +92,7 @@ ul {
     text-align: left;
     font-size: small;
     background-color: transparent;
-    color: #000;
+    color: #525f7f;
     display: inline-table;
     padding: 0px;
     padding-right: 5px; }
@@ -100,3 +100,12 @@ ul {
 .define {
   padding-bottom: 15px;
   border-bottom: 1px solid slategray; }
+  .define ul li {
+    float: left;
+    margin-right: 5px; }
+    .define ul li a {
+      text-decoration: none;
+      color: #6772e5; }
+      .define ul li a:hover {
+        textension-decoration: underline;
+        color: #32325d; }

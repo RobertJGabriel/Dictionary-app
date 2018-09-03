@@ -2,7 +2,6 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
   <title>Dictionary App</title>
   <link href="./scripts/bundle.min.css" rel="stylesheet">
 </head>
@@ -25,14 +24,12 @@
 
         <div class="col-sm-8 col-sm-offset-2" v-if="isEmpty === null">
           <p>Tip: Select text on any webpage either holder alt and right click, or click the dicitory app to view the
-            definition
-            of your selection
-          </p>
+            definition of your selection</p>
         </div>
 
         <div class="col-sm-8 col-sm-offset-2" v-if="isEmpty">
           <p>No definition found.</p>
-          <a href="https://www.google.ie/search?q=${search}">Search the Google for '{{ search }}'</a>
+          <vue-external-link v-bind:link="'https://www.google.ie/search?q=' + search " v-bind:text="'Search the Google for' + search"></vue-external-link>
         </div>
 
         <div class="col-sm-8 col-sm-offset-2" v-if="!isEmpty">
@@ -41,37 +38,31 @@
           <div class="define" v-if="meanings.length > 0">
             <h3> Meanings</h3>
             <ul class="meanings">
-              <li v-for="item in meanings " v-html="item.content , item.type"></li>
+              <vue-list-text v-for="item in meanings" :key="item.content" v-bind:content="item.content" v-bind:type="item.type"></vue-list-text>
             </ul>
           </div>
 
           <!-- synonyms -->
           <div class="define" v-if="synonyms.length > 0">
-
             <h3>Synonyms</h3>
             <ul>
-              <li v-for="item in synonyms">
-                <a v-html="item.title" target="_blank"></a>,
-              </li>
+              <vue-list-link v-for="item in synonyms" :key="item.content" v-bind:title="item.title" v-bind:link="item.link"></vue-list-link>
             </ul>
           </div>
 
           <!-- related -->
           <div class="define" v-if="related.length > 0">
-            <h3>See more </h3>
+            <h3>Related</h3>
             <ul>
-              <li v-for="item in related">
-                <a v-html="item.title" target="_blank"></a>
-              </li>
+              <vue-list-link v-for="item in related" v-on:click.native="research(item.title)" v-bind:title="item.title"
+                :key="item.title" v-bind:link="item.link"></vue-list-link>
             </ul>
           </div>
-
         </div>
       </div>
     </div>
   </div>
 
-  <script src="./scripts/vendor.js" type="text/javascript"></script>
   <script src="./scripts/popup.js" type="text/javascript"></script>
 
 </body>

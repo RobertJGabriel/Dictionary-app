@@ -1,15 +1,24 @@
 import Vue from 'vue';
+import listLink from './components/list-link.vue';
+import listText from './components/list-text.vue';
+import externalLink from './components/external-link.vue';
 
+Vue.component('vue-list-text', listText);
+Vue.component('vue-list-link', listLink);
+Vue.component('vue-external-link', externalLink);
 
-const vm = new Vue({
+new Vue({
   el: '#app',
+  components: {
+    listLink,
+    listText,
+    externalLink
+  },
   data: {
     search: '',
     isEmpty: null,
-    term: '',
     synonyms: [],
     related: [],
-    ipa: [],
     meanings: [],
   },
 
@@ -19,7 +28,7 @@ const vm = new Vue({
     },
     sortData(response) {
 
-      this.term = response.term ? response.term : ''; // Set the search term
+      this.search = response.term ? response.term : ''; // Set the search term
 
       if (response.meanings) { // If there is meanings in the response.
         for (var i in response.meanings) { // Loop though the array
@@ -35,7 +44,7 @@ const vm = new Vue({
 
       if (response.related) { // If there is related terms in the response.
         for (var i in response.related) {
-          var extern_link = `http://en.wikipedia.org/wiki/${response.related[i]}`;
+          var extern_link = `http://en.wikipedia.org/wiki/${response.related[i].toLowerCase()}`;
           let newObject = {
             link: extern_link,
             title: response.related[i],
@@ -45,25 +54,22 @@ const vm = new Vue({
       }
 
 
-      if (response.ipa) { // If there is ipa terms in the response.
-        for (var i in response.ipa) {
-          let newObject = {
-            title: response.ipa[i],
-          }
-          this.ipa.push(newObject);
-        }
-      }
-
-
       if (response.synonyms) { // If there is synonyms terms in the response.
         for (var i in response.synonyms) {
-          var extern_link = `http://en.wikipedia.org/wiki/${response.synonyms[i]}`;
+          var extern_link = `http://en.wikipedia.org/wiki/${response.synonyms[i].toLowerCase()}`;
           let newObject = {
-            linke: extern_link,
+            link: extern_link,
             title: response.synonyms[i],
           }
           this.synonyms.push(newObject);
         }
+      }
+    },
+    research(queryTerm){
+      console.log(queryTerm);
+      if (queryTerm !== null || queryTerm !== undefined || queryTerm !== '') {
+        this.search = queryTerm;
+        this.submit();
       }
     },
     submit() {
@@ -84,7 +90,6 @@ const vm = new Vue({
           this.synonyms = []; // Clear the varabiles
           this.related = []
           this.meanings = [];
-          this.ipa = [];
 
           if (this.isEmpty) return false;
           this.sortData(response);
@@ -96,5 +101,5 @@ const vm = new Vue({
 
 
 // Set config settings
-Vue.config.productionTip = false;
+Vue.config.productionTip = true;
 Vue.config.devtools = false;

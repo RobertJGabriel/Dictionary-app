@@ -10,7 +10,7 @@ module.exports = {
     'content.js': './scripts.babel/content.js',
     'popup.js': './scripts.babel/popup.js',
     'bundle.min.css': [
-      './styles/vendor/bootstrap.css',
+      '/styles/vendor/bootstrap.css',
       './styles/vendor/material.css',
       './styles/app/popup.css',
     ],
@@ -46,7 +46,7 @@ module.exports = {
     new ExtractTextPlugin("bundle.min.css"),
     new PurifyCSSPlugin({
       purifyOptions: {
-        whitelist: ['*tln-*', '*hljs-*','*hljs*', '*editor-*'],
+        whitelist: ['*tln-*', '*hljs-*', '*hljs*', '*editor-*'],
       },
       // Give paths to parse for rules. These should be absolute!
       paths: glob.sync(path.join(__dirname, 'app/*.html')),
