@@ -30,15 +30,12 @@ function sendRequest(url, sendResponse) {
 
 /**
  * Server procedure for content script.
- * Receives a request containing two parameters:
- * method:
- *    'lookup' for a Dictionary lookup.
+ * Receives a request containing three parameters:
  * @param  {} request
  * @param  {} sender
  * @param  {} sendResponse
  */
 chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
-  const method = request.method;
   // Look up a term from the dictionary using the Ajax API.
   const lookupURL = `http://dictionary-lookup.org/${request.arg}`;
   sendRequest(lookupURL)
