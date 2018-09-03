@@ -109,7 +109,7 @@ gulp.task('babel', () => {
 
 
 
-gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
+gulp.task('clean', del.bind(null, ['.tmp', 'dist','package','app/scripts/','app/styles/*.css']));
 
 gulp.task('watch', ['lint', 'babel'], () => {
   $.livereload.listen();
@@ -159,7 +159,7 @@ gulp.task('package', () => {
 
 gulp.task('build', cb => {
   runSequence(
-    'html',
+    'html', 'css',
     'lint', 'babel', 'images', 'extras', 'chromeManifest',
     'size', cb);
 });

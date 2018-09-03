@@ -2,10 +2,13 @@ import Vue from 'vue';
 import listLink from './components/list-link.vue';
 import listText from './components/list-text.vue';
 import externalLink from './components/external-link.vue';
+import realtedLink from './components/list-link-related.vue';
+
 
 Vue.component('vue-list-text', listText);
 Vue.component('vue-list-link', listLink);
 Vue.component('vue-external-link', externalLink);
+Vue.component('vue-link-related',realtedLink);
 
 new Vue({
   el: '#app',

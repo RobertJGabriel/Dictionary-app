@@ -1,5 +1,8 @@
+body {
+  background-color: #f6f9fc; }
+
 .app {
-  height: -webkit-fill-available;
+  height: min-content;
   max-width: 560px;
   min-width: 560px;
   overflow: auto;

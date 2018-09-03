@@ -4,9 +4,6 @@
   "engines": {
     "node": ">=0.8.0"
   },
-  "scripts":{
-    "start": "gulp css && gulp"
-  },
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-loader": "^6.4.1",

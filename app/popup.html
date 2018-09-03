@@ -54,8 +54,8 @@
           <div class="define" v-if="related.length > 0">
             <h3>Related</h3>
             <ul>
-              <vue-list-link v-for="item in related" v-on:click.native="research(item.title)" v-bind:title="item.title"
-                :key="item.title" v-bind:link="item.link"></vue-list-link>
+              <vue-link-related v-for="item in related" v-on:click.native="research(item.title)" v-bind:title="item.title"
+                :key="item.title" v-bind:link="item.link"></vue-link-related>
             </ul>
           </div>
         </div>

@@ -1,6 +1,6 @@
 <template>
   <li>
-    <a :href="link" target="_blank">{{ title }}</a>,
+    <a >{{ title }}</a>,
   </li>
 </template>
 
@@ -24,6 +24,7 @@
   .define ul li a {
     text-decoration: none;
     color: #6772e5;
+    cursor: pointer;
   }
 
   .define ul li a:hover {
